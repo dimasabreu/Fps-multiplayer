@@ -9,9 +9,11 @@ public class PlayerController : MonoBehaviour
     private float verticalRotStore;
     private Vector2 mouseInput;
     public bool invertLook;
+    public float moveSpeed = 5f;
+    private Vector3 moveDir;
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -27,10 +29,13 @@ public class PlayerController : MonoBehaviour
         if(invertLook)
         {
             viewPoint.rotation = Quaternion.Euler(verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
-        }
-        else
+        }else
         {
-            viewPoint.rotation = Quaternion.Euler(- verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
+            viewPoint.rotation = Quaternion.Euler(-verticalRotStore, viewPoint.rotation.eulerAngles.y, viewPoint.rotation.eulerAngles.z);
         }
+
+        moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+
+        transform.position += moveDir * moveSpeed;
     }
 }
